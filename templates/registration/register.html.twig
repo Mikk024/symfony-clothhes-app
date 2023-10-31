@@ -1,0 +1,44 @@
+{% extends 'layouts/guest.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <div class="px-10 mt-10">
+        {{ form_errors(registrationForm) }}
+        <h1 class="text-center text-6xl">Register</h1>
+        <div class="flex justify-center flex-col mt-10">
+        
+
+        {{ form_start(registrationForm, {'attr': {'class': 'mx-auto max-w-lg px-12 py-6 text-xl w-full text-center space-y-6'}}) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            <div class="flex space-x-6">
+                {{ form_row(registrationForm.address.first_name, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+                {{ form_row(registrationForm.address.last_name, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+            </div>
+            <div class="flex space-x-6">
+                {{ form_row(registrationForm.address.city, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+                {{ form_row(registrationForm.address.state, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+            </div>
+            <div class="flex space-x-6">
+                {{ form_row(registrationForm.address.street, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+                {{ form_row(registrationForm.address.postcode, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+            </div>
+            {{ form_row(registrationForm.address.country, {'attr': {'class': 'border-b border-gray-300 w-3/4 bg-gray-100 block mx-auto focus:outline-none text-center'}}) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+
+            <button type="submit" class="px-6 py-2 bg-black text-white rounded-md hover:text-gray-300">Register</button>
+        {{ form_end(registrationForm) }}
+        <p class="text-xl text-center">Do you already have an account?</p>
+        <a href="{{ path('login') }}" class="text-center mt-2 text-gray-500 hover:text-gray-700">Log in </a>
+        </div>
+    </div>
+{% endblock %}
+
+

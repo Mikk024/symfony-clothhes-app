@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block body %}
+    <div class="my-10 px-6 lg:px-36 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="text-center lg:text-left">
+            <img src="{{ product.image }}" class="object-cover rounded-md md:h-1/2 mx-auto lg:mx-0"/>
+        </div>
+        <div class="text-center lg:text-left">
+            <div class="space-y-2">
+                <p class="text-4xl">{{ product.name }}</p>
+                <p class="text-2xl">{{ product.brand.name }}</p>
+                <p class="text-xl">$ {{ product.price }} <span class="text-gray-700">Tax Included</span></p>
+            </div>
+            <div class="mt-6 lg:mt-12">
+                <p class="text-xl">Size: {{ product.size }}</p>
+                <p class="text-xl">In stock: {{ product.stockQuantity > 0 ? product.stockQuantity : 'Out of stock' }}</p>
+            </div>
+            <div class="mt-6 lg:mt-52">
+                {{ form_start(form, {'attr': {'class': 'space-y-2'}}) }}
+                    {{ form_row(form.quantity, {'attr': {'class': 'border-2 py-1 text-center px-4 border-black w-1/2 lg:w-1/4 focus:outline-none', 'min': '1', 'max': product.stockQuantity, 'value': '1'}}) }}
+                    {{ form_row(form.add, {'attr': {'class': 'w-full lg:w-3/4 bg-black text-white border border-black hover:bg-gray-300 hover:text-black py-2', 'disabled': product.stockQuantity < 1}, 'label': product.stockQuantity == 0 ? 'Out of stock' : 'Add to Cart'} ) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

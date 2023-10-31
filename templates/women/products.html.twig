@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block title %}{{ app.request.query.get('brand') }}{% endblock %}
+{% block body %}
+    <div class="hero-small-top flex items-center justify-center" style="background-image: url('{{ asset('images/images/mens-products.jpg') }}')">
+        <div class="hero-shadow"></div>
+        <p class="text-center text-white text-4xl">Women's Products</p>
+    </div>
+    <div class="px-6 lg:px-28 my-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div class="bg-gray-100 border-2 border-gray-200 rounded-md flex flex-col space-y-4 p-4">
+                <p class="text-4xl">Filter</p>
+                <p class="text-3xl">Type</p>
+                <a href="{{ path('women-clothes', {'brand': app.request.query.get('brand') }) }}" class="text-xl transition ease-in-out delay-50 hover:scale-105 duration-300 px-4">Clothes</a>
+                <a href="{{ path('women-shoes', {'brand': app.request.query.get('brand') }) }}" class="text-xl transition ease-in-out delay-50 hover:scale-105 duration-300 px-4">Shoes</a>
+            </div>
+            <div class="lg:col-span-3 p-4">
+                <p class="text-4xl">{{ app.request.query.get('brand') }} Products</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 md:p-4">
+                    {% for product in products %}
+                        <a href="{{ path('show-product', {'id':  product.id} ) }}" class="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-300">
+                            <img src="{{ product.image }}" class="h-96 w-full object-cover rounded-md" />
+                            <div class="flex justify-between px-6">
+                                <div>
+                                    <p class="text-xl">{{ product.brand.name }}</p>
+                                    <p>{{ product.category.name }}</p>
+                                    <p>{{ product.size }}</p>
+                                </div>
+                                <p class="mt-6 text-2xl">{{ product.price }} $</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="mt-16 flex justify-center">
+                    {{ knp_pagination_render(products, 'pagination/tailwindcss_pagination.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

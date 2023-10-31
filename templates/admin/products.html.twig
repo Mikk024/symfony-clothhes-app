@@ -1,0 +1,43 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block body %}
+    <div class="px-32 my-12">
+        <p class="text-4xl text-center">Products</p>
+        <table class="table-fixed text-center w-full mt-4">
+            <thead>
+                <tr>
+                    <th class="p-4">Id</th>
+                    <th class="p-4">Category</th>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Gender</th>
+                    <th class="p-4">Color</th>
+                    <th class="p-4">Size</th>
+                    <th class="p-4">Stock Quantity</th>
+                    <th class="p-4">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td class="p-4">{{ product.id }}</td>
+                    <td class="p-4">{{ product.category.name }}</td>
+                    <td class="p-4"><a href="{{ path('show-product', {'id': product.id }) }}" class="hover:underline">{{ product.name }}</a></td>
+                    <td class="p-4">{{ product.gender }}</td>
+                    <td class="p-4">{{ product.color }}</td>
+                    <td class="p-4">{{ product.size }}</td>
+                    <td class="p-4">{{ product.stockQuantity }}</td>
+                    <td class="p-4">
+                        <div class="flex space-x-2">
+                            <a href="{{ path('admin-update', {'id': product.id }) }}" class="py-2 px-4 bg-green-700 hover:bg-green-900 text-white rounded-md">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-16 pb-32 flex mx-6 justify-center">
+        {{ knp_pagination_render(products, 'pagination/tailwindcss_pagination.html.twig') }}
+    </div>
+
+{% endblock %}

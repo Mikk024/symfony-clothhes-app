@@ -1,0 +1,51 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+
+{% block title %} Your cart {% endblock %}
+{% block body %}
+    {% if cart.items.count > 0 %}
+        {{ form_start(form, {'attr': {'class': 'flex flex-col lg:flex-row mx-4 lg:mx-32 space-y-4 lg:space-y-0 lg:space-x-4'}}) }}
+            <div class="w-full lg:w-2/3">
+                <div class="flex">
+                    <p class="text-2xl text-white bg-black py-2 px-6 rounded-sm w-3/4">Cart Items</p>
+                    {{ form_widget(form.clear, {'attr': {'class': 'w-1/4 bg-red-700 text-white text-center py-2 text-lg hover:bg-red-900 rounded-md'}}) }}
+                </div>
+                {% for item in form.items %}
+                    <div class="mt-4 flex flex-col lg:flex-row product-cart">
+                        <div class="w-full lg:w-1/4 mb-4 lg:mb-0 lg:mr-4">
+                            <img src="{{ item.vars.data.product.image }}" class="rounded-sm shadow-md" style="height: 300px; width: 300px; object-fit: cover;" />                   
+                        </div>
+                        <div class="w-full lg:w-3/4 bg-zinc-50 flex justify-between p-4 rounded-sm">
+                            <div class="flex flex-col">
+                                <a href="{{ path('show-product', {'id': item.vars.data.product.id }) }}"  class="text-3xl hover:underline">{{ item.vars.data.product.name }}</a>
+                                <p class="text-xl">{{ item.vars.data.product.brand.name }}</p>
+                                <p class="text-lg">Size: {{ item.vars.data.product.size }}</p>
+                                <p class="text-lg">Quantity: {{ item.vars.data.quantity }}</p>
+                                <p class="text-lg">Price: {{ item.vars.data.product.price }} $</p>
+                            </div>
+                            {{ form_widget(item.remove, {'attr': {'class': "text-red-500 hover:text-red-700 text-xl"}}) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="w-full lg:w-1/3">
+                <p class="text-center text-white bg-black py-2 text-2xl rounded-sm">Summary</p>
+                <div class="mt-4 py-12 px-10 bg-zinc-50 space-y-6">
+                    {% for item in cart.items %}
+                        <p class="text-xl">{{ item.quantity }} x {{ item.product.price }} $ {{ item.product.name }}</p>
+                    {% endfor %}
+                    <p class="text-xl">9.99 $ Shipping</p>
+                    <p class="mt-4 text-3xl border-t border-zinc-300 pt-4">Total</p>
+                    <p class="text-3xl">{{ cart.total + 9.99 }} $</p>
+                    <a href="{{ path('order') }}" class="w-full bg-black text-white text-center py-2 text-lg hover:text-gray-300 rounded-md block">Order</a>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    {% else %}
+        <div class="flex flex-col items-center space-y-4 mx-4 lg:mx-32">
+            <p class="text-4xl text-center">Your cart is empty</p>
+            <a class="text-center bg-black text-white px-4 text-2xl py-2 hover:text-gray-300 rounded-md" href="{{ path('men-clothes') }}">Find something now!</a>
+        </div>
+    {% endif %}
+{% endblock %}

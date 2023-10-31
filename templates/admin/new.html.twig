@@ -1,0 +1,41 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block body %}
+    <div class="mt-10 mx-4 lg:mx-0">
+        <p class="text-4xl text-center">Add Product</p>
+        <div class="flex justify-center mt-10">
+            {{ form_start(productForm, {'attr': {'class': 'space-y-4 w-full max-w-md'}}) }}
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.name, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.brand, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.price, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.color, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.size, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.gender, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.stock_quantity, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.category, {'attr': {'class': 'block text-center'}}) }}
+                </div>
+                <div class="text-center flex justify-center">
+                    {{ form_row(productForm.image, {'attr': {'class': 'block text-center'}})}}
+                </div>
+                <div class="text-center flex justify-center">
+                    <button type="submit" class="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-700 hover:text-white">Add</button>
+                </div>
+            {{ form_end(productForm) }}
+        </div>
+    </div>
+{% endblock %}

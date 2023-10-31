@@ -1,0 +1,28 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block body %}
+    <div class="px-32 my-12">
+        <p class="text-4xl text-center">Users</p>
+        <table class="table-fixed text-center w-full mt-4">
+            <thead>
+                <tr>
+                    <th class="p-4">Id</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Orders</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="p-4">{{ user.id }}</td>
+                    <td class="p-4">{{ user.email }}</td>
+                    <td class="p-4">{{ user.orders|length   }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-16 pb-32 flex mx-6 justify-center">
+        {{ knp_pagination_render(users, 'pagination/tailwindcss_pagination.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/665d94e5f3.js" crossorigin="anonymous"></script>  
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body class="bg-gray-100">
+    <p class="text-4xl text-center mt-4">Clothhes</p>       
+    <div class="container mx-auto py-10 px-4 lg:px-32 flex justify-between items-center">
+        <div class="space-x-4 flex items-center">
+            <a href="{{ path('home-women') }}" class="px-4 py-2 text-xl {{ 'women' in app.request.attributes.get('_route') ? 'bg-black text-white' : 'hover:bg-gray-100' }}">Women</a>
+            <a href="{{ path('home-men') }}" class="px-4 py-2 text-xl {{ 'women' not in app.request.attributes.get('_route') ? 'bg-black text-white' : 'hover:bg-gray-100' }}">Men</a>
+        </div>
+        <div class="hidden md:inline-block">
+        {% if app.user %}
+            <div class="dropdown">
+                <a class="text-xl hover:bg-black hover:text-white px-4 py-2" id="dropdown-user"><i class="fa-regular fa-user"></i></a>
+                <div class="dropdown-content">
+                    <a href="{{ path('list-orders') }}" class="hover:bg-black hover:text-white">Your orders</a>
+                    <a href="{{ path('logout') }}" class="hover:bg-black hover:text-white">Logout</a>
+                </div>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin-store') }}" class="text-white bg-black px-4 py-2 rounded-md hover:text-gray-300">Admin Panel</a>
+            {% endif %}
+            {% else %}
+            <div class="dropdown">
+                <a class="text-xl hover:bg-black hover:text-white px-4 py-2" id="dropdown-user"><i class="fa-regular fa-user"></i></a>
+                <div class="dropdown-content">
+                    <a href="{{ path('login') }}" class="hover:bg-black hover:text-white">Login</a>
+                    <a href="{{ path('register') }}" class="hover:bg-black hover:text-white">Register</a>
+                </div>
+            </div>      
+            {% endif %}
+            </div>
+            {% if app.user %}
+                <a class="md:hidden text-lg" href="{{ path('list-orders') }}">Your Orders</a>
+                <a class="md:hidden text-lg text-white bg-black p-2 hover:text-black hover:bg-zinc-300 border-2 border-black" href="{{ path('logout') }}">Logout</a>
+            {% else %}
+                <a class="md:hidden text-lg text-white bg-black p-2 hover:text-black hover:bg-zinc-300 border-2 border-black" href="{{ path('login') }}">Login</a>
+            {% endif %}
+    </div>
+
+    <div class="py-6 px-4 lg:px-28 flex justify-between items-center">
+        <div class="space-x-4 flex items-center">
+            <a href="{{ 'women' in app.request.attributes.get('_route') ? path('women-shoes') : path('men-shoes') }}" class="px-4 py-2 {{ 'shoes' in app.request.attributes.get('_route') ? "bg-black text-white" : "" }}">Shoes</a>
+            <a href="{{ 'women' in app.request.attributes.get('_route') ? path('women-clothes') : path('men-clothes') }}" class="px-4 py-2 {{ 'clothes' in app.request.attributes.get('_route') ? "bg-black text-white" : "" }}">Clothes</a>
+            <a href="{{ 'women' in app.request.attributes.get('_route') ? path('women-brands') : path('men-brands') }}" class="px-4 py-2 {{ 'brands' in app.request.attributes.get('_route') ? "bg-black text-white" : "" }}">Brands</a>
+        </div>
+        <a href="{{ path('products-cart') }}" class="flex items-center">
+            <span class="text-white bg-black px-4 py-2 rounded-md"> 
+                <i class="fa-solid fa-cart-shopping"></i> Your Cart
+            </span>
+        </a>
+    </div>
+
+    {% for error in app.flashes('errors') %}
+        <p class="px-4 py-2 bg-red-200 text-red-800">{{ error }}</p>
+    {% endfor %}
+
+    {% for success in app.flashes('success') %}
+        <p class="px-4 py-2 bg-green-100 text-green-800">{{ success }}</p>
+    {% endfor %}
+    
+    {% block body %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+</html>

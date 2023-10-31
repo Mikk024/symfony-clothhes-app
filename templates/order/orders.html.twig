@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    <div class="px-4 lg:px-32 py-12">
+        <p class="text-center text-4xl py-4 border-b-2 border-black">Your Orders</p>
+        <div class="overflow-x-auto">
+            <table class="table-fixed text-center w-full my-8">
+                <thead class="bg-black text-white">
+                    <tr>
+                        <th class="p-4">Id</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4">Amount</th>
+                        <th class="p-4">Payment Method</th>
+                        <th class="p-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders  %}
+                    <tr class="border-b border-black">
+                        <td class="p-4">{{ order.id }}</td>
+                        <td class="p-4">{{ order.status }}</td>
+                        <td class="p-4">{{ order.payment.amount }}  $</td>
+                        <td class="p-4">{{ order.payment.paymentMethod }}</td>
+                        <td class="p-4"><a class="px-4 py-2 text-white font-bold bg-black rounded-md border border-black hover:text-black hover:bg-gray-400" href="{{ path('show-order', {'id': order.id }) }}">Details</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="mt-16 flex justify-center">
+                {{ knp_pagination_render(orders, 'pagination/tailwindcss_pagination.html.twig') }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

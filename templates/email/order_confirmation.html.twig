@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Thank you!</title>
+</head>
+<body style="font-family: 'Arial', sans-serif; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 16px;">
+        <div style="margin-bottom: 16px; text-align: center; font-size: 24px; font-weight: bold;">Zalando</div>
+        <div style="background-color: #000; color: #fff; text-align: center; font-size: 24px; font-weight: bold; padding: 16px;">Order Details</div>
+        <div style="margin-bottom: 32px; border-bottom: 2px solid #000;">
+            <div style="padding: 16px;">
+                <p style="font-size: 20px; font-weight: bold;">Shipping:</p>
+                <p style="font-size: 20px;">Basic Shipping</p>
+                <p style="font-size: 20px; font-weight: bold;">Status:</p>
+                <p style="font-size: 20px;">{{ order.status }}</p>
+            </div>
+            <div style="padding: 16px;">
+                <p style="font-size: 20px; font-weight: bold;">Address:</p>
+                <p style="font-size: 20px;">{{ address.firstName ~ ' ' ~ address.lastName }}</p>
+                <p style="font-size: 20px;">{{ address.street }}</p>
+                <p style="font-size: 20px;">{{ address.postcode ~ ' ' ~ address.city }}</p>
+                <p style="font-size: 20px;">{{ address.country ~ ', ' ~ address.state }}</p>
+            </div>
+            <div style="padding: 16px;">
+                <p style="font-size: 20px; font-weight: bold;">Amount:</p>
+                {% for item in order.items %}
+                    <p style="font-size: 20px;">{{ item.quantity }} x {{ item.product.price }} $ {{ item.product.name }}</p>
+                {% endfor %}
+                <p style="border-bottom: 2px solid #000; font-size: 20px;">1 x 9.99 $ Shipping</p>
+                <p style="font-size: 20px; font-weight: bold;">{{ order.total + 9.99 }} $</p>
+            </div>
+        </div>
+        <div style="background-color: #000; color: #fff; text-align: center; font-size: 24px; font-weight: bold; padding: 16px;">Order Items</div>
+        {% for item in order.items %}
+            <div style="margin-bottom: 32px;">
+                <div style="background-color: #f2f2f2; padding: 16px; border-radius: 4px;">
+                    <p style="font-size: 24px; font-weight: bold; text-decoration: underline; color: #000; display: block; margin-bottom: 8px;">{{ item.product.name }}</p>
+                    <p style="font-size: 20px;">{{ item.product.brand.name }}</p>
+                    <p style="font-size: 18px;">Size: {{ item.product.size }}</p>
+                    <p style="font-size: 18px;">Quantity: {{ item.quantity }}</p>
+                    <p style="font-size: 18px;">Price: {{ item.product.price }} $</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

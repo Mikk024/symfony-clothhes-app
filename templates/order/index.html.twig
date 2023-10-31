@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block title %} Order Summary{% endblock %}
+{% block body %}
+    <p class="text-center text-4xl mb-6">Order</p>
+    <div class="flex flex-col lg:flex-row mx-4 lg:mx-12 my-12 space-y-8 lg:space-y-0 lg:space-x-8">
+        <div class="w-full lg:w-2/3 space-y-4">
+            <div class="bg-black text-white text-2xl px-6 py-2">Shipping</div>
+            <div class="border-b-2 border-black px-6 py-4">
+                <p class="text-2xl">Basic Shipping</p>
+                <p class="text-gray-600 text-xl">9.99 $</p>
+            </div>
+            <div class="bg-black text-white text-2xl px-6 py-2">Items</div>
+            {% for item in cart.items %}
+                <div class="flex flex-col lg:flex-row px-4 lg:px-0">
+                    <div class="w-full lg:w-1/4 mb-4 lg:mb-0">
+                        <img src="{{ item.product.image }}" class="rounded-sm shadow-md w-full lg:inline-block hidden" style="max-height: 300px; object-fit: cover;" />                   
+                    </div>
+
+                    <div class="w-full lg:w-3/4 bg-zinc-50 flex justify-between p-4 rounded-sm">
+                        <div>
+                            <a href="{{ path('show-product', {'id': item.product.id }) }}" class="text-3xl hover:underline">{{ item.product.name }}</a>
+                            <p class="text-xl">{{ item.product.brand.name }}</p>
+                            <p class="text-lg">Size: {{ item.product.size }}</p>
+                            <p class="text-lg">Quantity: {{ item.quantity }}</p>
+                            <p class="text-lg">Price: {{ item.product.price }} $</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="w-full lg:w-1/3 space-y-2">
+            <div class="space-y-2 border-b-2 border-black pb-2">
+                <div class="bg-black text-white text-2xl px-6 py-2">Address</div>
+                <p class="px-6 text-xl">{{ address.firstName ~ ' ' ~ address.lastName  }}</p>
+                <p class="px-6 text-xl">{{ address.street }}</p>
+                <p class="px-6 text-xl">{{ address.postcode ~ ' ' ~ address.city }}</p>
+                <p class="px-6 text-xl">{{ address.country ~ ', ' ~ address.state }}</p>
+            </div>
+            <div>
+                <div class="bg-black text-white text-2xl px-6 py-2">Summary</div>
+                <div class="py-12 px-10 bg-zinc-50 space-y-6">
+                    {% for item in cart.items %}
+                        <p class="text-xl">{{ item.quantity }} x {{ item.product.price }} $ {{ item.product.name }}</p>
+                    {% endfor %}
+                    <p class="text-xl">9.99 $ Shipping</p>
+                    <p class="mt-4 text-3xl border-t border-zinc-300 pt-4">Total</p>
+                    <p class="text-3xl ">{{ cart.total + 9.99 }} $</p>
+                    <form action="{{ path('handle-order') }}" method="post" >
+                        <button class="w-full bg-black text-white text-center py-2 text-lg hover:text-black hover:bg-zinc-300 border-2 border-black">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

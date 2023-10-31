@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %} Men Brands {% endblock %}
+{% block body %}
+    <div class="hero-small-top flex items-center justify-center" style="background-image: url('{{ asset('images/images/brands-men-hero.jpg') }}');">
+        <div class="hero-shadow"></div>
+        <p class="text-center text-white text-4xl">Brands</p>
+    </div>
+    <div class="px-28 my-12">
+        <p class="text-4xl">Popular Brands</p>
+        <div class="grid lg:grid-cols-3 gap-4 mt-4">
+            <a href="{{ path('men-products', {'brand': 'Adidas'}) }}" class="border" style="background-image: url('{{ asset('images/adidas.jpg') }}'); background-size: cover; background-size: cover; background-position: center; height: 250px; padding: 1rem;"></a>
+            <a href="{{ path('men-products', {'brand': 'Nike'}) }}" class="border" style="background-image: url('{{ asset('images/nike.jpg') }}'); background-size: cover; background-size: cover; background-position: center; height: 250px; padding: 1rem;"></a>
+            <a href="{{ path('men-products', {'brand': 'Carhartt'}) }}" class="border" style="background-image: url('{{ asset('images/carhartt.jpg') }}'); background-size: cover; background-size: cover; background-position: center; height: 250px; padding: 1rem;"></a>
+        </div>
+        <p class="text-4xl my-4">All Brands</p>
+        <div class="flex flex-col space-y-2">
+            {% for brand in brands %}
+                <a href="{{ path('men-products', {'brand': brand.name }) }}" class="text-2xl hover:underline">{{ brand.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
