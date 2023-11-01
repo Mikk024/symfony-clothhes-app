@@ -24,7 +24,8 @@ This project is a full-fledged e-commerce platform similar to Zalando, built usi
 - Implements robust validation for user inputs
 - Admin role for managing products, categories, and orders
 - Email notifications for order confirmation
-- 
+  
+
 ## Technologies Used
 
 - **Backend:** Symfony (PHP), MySQL
